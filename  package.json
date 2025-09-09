@@ -1,5 +1,5 @@
 {
-  "name": "@veridiancore/lgms-api",
+  "name": "@weezyana07/lgms-api",
   "version": "1.0.0",
   "description": "Shared API client for LGMS (payments + revenue).",
   "main": "dist/index.cjs",

@@ -1,0 +1,33 @@
+{
+  "name": "@weezyana07/lgms-api",
+  "version": "1.0.0",
+  "description": "Shared API client for LGMS (payments + revenue)",
+  "main": "dist/index.js",
+  "author": "",
+  "license": "MIT",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsup src/index.ts --dts --format esm,cjs --clean",
+    "prepublishOnly": "npm run build"
+  },
+  "publishConfig": {
+    "access": "restricted",
+    "registry": "https://npm.pkg.github.com"
+  },
+  "peerDependencies": {
+    "axios": "^1.6.0"
+  },
+  "files": [
+    "dist"
+  ],
+  "dependencies": {
+    "tslib": "^2.8.1"
+  },
+  "devDependencies": {
+    "axios": "^1.11.0",
+    "tsup": "^8.5.0",
+    "typescript": "^5.9.2"
+  }
+}
