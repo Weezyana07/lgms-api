@@ -38,7 +38,7 @@ export function createClients(cfg: ApiConfig) {
   const paymentBase = base + (cfg.paymentBasePath ?? '/payment');
 
   return {
-    revenueClient: make(revenueBase),
-    paymentClient: make(paymentBase),
+    revenueClientApi: make(revenueBase),
+    paymentClientApi: make(paymentBase),
   };
 }
