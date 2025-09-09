@@ -1,7 +1,7 @@
 import type { AxiosInstance } from 'axios';
 import type { PeriodicOptions } from './types';
 
-export function makePaymentsAPI(paymentClient: AxiosInstance) {
+export function makePaymentsAPI(paymentClientApi: AxiosInstance) {
   return {
     initiate: async (payload: {
       service_type: string;
@@ -27,22 +27,22 @@ export function makePaymentsAPI(paymentClient: AxiosInstance) {
       };
       if (payload.amount != null) body.amount = payload.amount;
 
-      const res = await paymentClient.post('/initiate/', body);
+      const res = await paymentClientApi.post('/initiate/', body);
       return res.data as { reference: string; payment_url?: string };
     },
 
     list: async (params: Record<string, any> = {}) => {
-      const res = await paymentClient.get('/', { params });
+      const res = await paymentClientApi.get('/', { params });
       return res.data;
     },
 
     exportCsv: async () => {
-      const res = await paymentClient.get('/export/csv/', { responseType: 'blob' });
+      const res = await paymentClientApi.get('/export/csv/', { responseType: 'blob' });
       return res.data as Blob;
     },
 
     exportPdf: async () => {
-      const res = await paymentClient.get('/export/pdf/', { responseType: 'blob' });
+      const res = await paymentClientApi.get('/export/pdf/', { responseType: 'blob' });
       return res.data as Blob;
     },
   };

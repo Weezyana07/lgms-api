@@ -171,14 +171,14 @@ const FALLBACK_SERVICE_MAP: Record<string, ServiceMeta> = {
 let _serviceMap: Record<string, ServiceMeta> | null = null;
 let _serviceMapPromise: Promise<Record<string, ServiceMeta>> | null = null;
 
-export function makeRevenueAPI(revenueClient: AxiosInstance) {
+export function makeRevenueAPI(revenueClientApi: AxiosInstance) {
   async function fetchServiceMap(): Promise<Record<string, ServiceMeta>> {
     if (_serviceMap) return _serviceMap;
     if (_serviceMapPromise) return _serviceMapPromise;
 
     _serviceMapPromise = (async () => {
       try {
-        const res = await revenueClient.get<{ services: ServiceMeta[] }>('/core/services-map/');
+        const res = await revenueClientApi.get<{ services: ServiceMeta[] }>('/core/services-map/');
         const map = Object.fromEntries(res.data.services.map(s => [s.slug, s]));
         _serviceMap = map;
         return map;
@@ -218,37 +218,37 @@ export function makeRevenueAPI(revenueClient: AxiosInstance) {
         ...(payload.billing_unit ? { billing_unit: payload.billing_unit } : {}),
         ...(payload.billing_count ? { billing_count: payload.billing_count } : {}),
       };
-      const res = await revenueClient.post(`/${path}/`, body);
+      const res = await revenueClientApi.post(`/${path}/`, body);
       return res.data;
     },
 
     async list(serviceType: string, params?: Record<string, any>, opts?: { pathOverride?: string }) {
       const path = await getServicePath(serviceType, opts?.pathOverride);
-      const res = await revenueClient.get(`/${path}/`, { params });
+      const res = await revenueClientApi.get(`/${path}/`, { params });
       return res.data;
     },
 
     async retrieve(serviceType: string, id: number | string, opts?: { pathOverride?: string }) {
       const path = await getServicePath(serviceType, opts?.pathOverride);
-      const res = await revenueClient.get(`/${path}/${id}/`);
+      const res = await revenueClientApi.get(`/${path}/${id}/`);
       return res.data;
     },
 
     async approve(serviceType: string, id: number | string, body: Record<string, any> = {}, opts?: { pathOverride?: string }) {
       const path = await getServicePath(serviceType, opts?.pathOverride);
-      const res = await revenueClient.post(`/${path}/${id}/approve/`, body);
+      const res = await revenueClientApi.post(`/${path}/${id}/approve/`, body);
       return res.data;
     },
 
     async reject(serviceType: string, id: number | string, reason: string, opts?: { pathOverride?: string }) {
       const path = await getServicePath(serviceType, opts?.pathOverride);
-      const res = await revenueClient.post(`/${path}/${id}/reject/`, { rejection_reason: reason });
+      const res = await revenueClientApi.post(`/${path}/${id}/reject/`, { rejection_reason: reason });
       return res.data;
     },
 
     async resubmit(serviceType: string, id: number | string, patch: Record<string, any>, opts?: { pathOverride?: string }) {
       const path = await getServicePath(serviceType, opts?.pathOverride);
-      const res = await revenueClient.post(`/${path}/${id}/resubmit/`, patch);
+      const res = await revenueClientApi.post(`/${path}/${id}/resubmit/`, patch);
       return res.data;
     },
 
