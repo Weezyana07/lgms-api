@@ -1,6 +1,6 @@
 {
   "name": "@weezyana07/lgms-api",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Shared API client for LGMS (payments + revenue)",
   "main": "dist/index.js",
   "author": "",
